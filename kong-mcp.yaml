@@ -1,0 +1,57 @@
+_format_version: "3.0"
+services:
+- host: weatherapi.com
+  id: 4e74cae4-baa2-50cd-8df2-e015d876ce3b
+  name: weatherapi-mcp-spec
+  path: /
+  plugins: []
+  port: 443
+  protocol: https
+  routes:
+  - id: 9ae46d1f-4182-5269-8711-50f831e2037c
+    name: weatherapi-mcp-spec-mcp
+    paths:
+    - /weatherapi-mcp-spec-mcp
+    plugins:
+    - config:
+        mode: conversion-listener
+        tools:
+        - annotations:
+            title: Retrieves near real-time current weather metrics.
+          description: Fetches live weather conditions for a specified location including
+            temperature, wind, and basic indices.
+          method: GET
+          name: get-current-weather
+          parameters:
+          - description: The city name, US zip code, UK postcode, or coordinates.
+            in: query
+            name: q
+            required: true
+            schema:
+              type: string
+          path: /current.json
+        - annotations:
+            title: Retrieves up to 14 days of weather forecast data.
+          description: Fetches daily and hourly forecast trends, conditions, and precipitation
+            possibilities.
+          method: GET
+          name: get-weather-forecast
+          parameters:
+          - description: The city name, zip code, or coordinates.
+            in: query
+            name: q
+            required: true
+            schema:
+              type: string
+          - description: Number of forecast days required (1-14).
+            in: query
+            name: days
+            required: false
+            schema:
+              type: integer
+          path: /forecast.json
+      id: 7db9bbf8-1c55-5b4f-8c89-9bf5b4cc966a
+      name: ai-mcp-proxy
+      tags: []
+    tags: []
+  tags: []

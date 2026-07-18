@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: WeatherAPI MCP Spec
+  version: 1.0.0
+  description: OpenAPI standard specification mapping WeatherAPI core endpoints.
+servers:
+  - url: https://weatherapi.com
+paths:
+  /current.json:
+    get:
+      operationId: get_current_weather
+      summary: Retrieves near real-time current weather metrics.
+      description: Fetches live weather conditions for a specified location including temperature, wind, and basic indices.
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: The city name, US zip code, UK postcode, or coordinates.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful weather payload return.
+  /forecast.json:
+    get:
+      operationId: get_weather_forecast
+      summary: Retrieves up to 14 days of weather forecast data.
+      description: Fetches daily and hourly forecast trends, conditions, and precipitation possibilities.
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: The city name, zip code, or coordinates.
+          schema:
+            type: string
+        - name: days
+          in: query
+          required: false
+          description: Number of forecast days required (1-14).
+          schema:
+            type: integer
+            default: 3
+      responses:
+        '200':
+          description: Successful forecast payload return.
